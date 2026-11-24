@@ -10,6 +10,7 @@ Steps
   5. Measure alarm timing on the historical cases and false alarms on the
      held-out negative controls.
   6. Failure-mode analyses: masking and stimulated reporting.
+  7. Alarm thresholds implied by the cost of a false alarm (belief MDP).
 """
 
 from __future__ import annotations
@@ -25,14 +26,15 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from kwwk import hmm, plots  # noqa: E402
+from kwwk import decision, hmm, plots  # noqa: E402
 from kwwk.alarm import MIN_CASES, methods  # noqa: E402
 from kwwk.contingency import load_contingency, quarter_end  # noqa: E402
 from kwwk.evaluate import (  # noqa: E402
     case_table, discrimination, operating_points, tradeoff_curve,
 )
+from kwwk.experiment import fit_hmms, select_pairs, split_ids  # noqa: E402
 from kwwk.reference import load_cases, load_events, pair_id  # noqa: E402
-from kwwk.replay import run_replay, sequences  # noqa: E402
+from kwwk.replay import run_replay  # noqa: E402
 
 MASKING_ID = "rosiglitazone__acute_mi__no_rofecoxib"
 
@@ -66,32 +68,18 @@ def main():
 
     # ------------------------------------------------------------------ data
     history = load_contingency(data / "contingency.csv")
-    counts = history[(history["quarter"] >= args.first) & (history["quarter"] <= args.last)]
-    exposure = counts.groupby("pair_id")["n_drug"].sum()
-    enough = counts["pair_id"].map(exposure >= args.min_drug_reports)
-    n_dropped = counts.loc[~enough & (counts["group"] == "omop"), "pair_id"].nunique()
-    counts = counts[(counts["group"] == "case") | enough]
+    counts, n_dropped = select_pairs(history, args.first, args.last, args.min_drug_reports)
     counts = pd.concat(
         [counts, masking_counts(data / "rosiglitazone_mi_excluding_rofecoxib.csv",
                                 args.first, args.last)],
         ignore_index=True,
     )
-
-    meta = counts.drop_duplicates("pair_id").set_index("pair_id")
-    omop = meta[meta["group"] == "omop"]
-    ids = {
-        f"{split}_{'pos' if label else 'neg'}":
-            list(omop.index[(omop["split"] == split) & (omop["label"] == label)])
-        for split in ("tune", "test") for label in (0, 1)
-    }
+    ids = split_ids(counts)
     tune_pool = ids["tune_neg"] + ids["tune_pos"]
 
     # ---------------------------------------------------------- Baum-Welch
-    seqs = sequences(counts)
-    prior = hmm.default_params()
-    train = [(seqs[p][1], seqs[p][2]) for p in tune_pool]
-    fit = hmm.baum_welch(train, prior)
-    models = {"hmm_prior": prior, "hmm_bw": fit.params}
+    models, fit, train = fit_hmms(counts, tune_pool)
+    prior = models["hmm_prior"]
 
     # EM only finds a local optimum, so restart it from two distant starting
     # points and record where each one ends up.
@@ -200,6 +188,30 @@ def main():
             "observed_over_expected": round(block["a"].sum() / block["expected"].sum(), 2),
         })
     pd.DataFrame(rows).to_csv(tables / "stimulated_reporting_rosiglitazone.csv", index=False)
+
+    # ------------------------------------------- alarm as a decision problem
+    ratios = [2.0 ** e for e in np.arange(-1, 9.01, 0.5)]
+    names = {"hmm_prior": "prior parameters", "hmm_bw": "Baum-Welch"}
+    threshold_rows, implied_rows = [], []
+    for key, params in models.items():
+        for expected in (2.0, 10.0, 50.0):
+            grid, M = decision.belief_transitions(params, expected)
+            for ratio in ratios:
+                threshold_rows.append({
+                    "parameters": names[key], "expected_per_quarter": expected,
+                    "cost_ratio": ratio,
+                    "optimal_threshold": decision.solve(grid, M, ratio)[1],
+                })
+            for threshold in (0.5, 0.9, 0.99):
+                implied_rows.append({
+                    "parameters": names[key], "expected_per_quarter": expected,
+                    "belief_threshold": threshold,
+                    "implied_cost_ratio": decision.implied_cost_ratio(params, expected, threshold),
+                })
+    thresholds = pd.DataFrame(threshold_rows)
+    thresholds.round(4).to_csv(tables / "decision_thresholds.csv", index=False)
+    pd.DataFrame(implied_rows).round(2).to_csv(tables / "decision_implied_costs.csv", index=False)
+    plots.decision_thresholds(thresholds, figures / "decision_thresholds.png")
 
     # ---------------------------------------------------------------- summary
     summary = {

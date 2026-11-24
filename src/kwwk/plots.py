@@ -281,3 +281,81 @@ def stimulated_reporting(full, markers, path):
                          fontsize=8, va="bottom", ha="left")
     fig.savefig(path)
     plt.close(fig)
+
+
+def simulation(result, method_list, path, target_far):
+    """Detection of simulated signals at a matched false-alarm rate.
+
+    Rows are methods.  A filled dot is the larger effect and a hollow dot the
+    smaller one.  The top row of panels has a clean baseline, the bottom row a
+    confounded one.
+    """
+    panels = [("emerging_detected", "Emerging signals detected", True),
+              ("emerging_mean_delay", "Emerging signals: quarters from onset to alarm", False),
+              ("from_start_mean_delay", "Present from the start: quarters to alarm", False)]
+    baselines = list(dict.fromkeys(result["baseline"]))
+    effects = sorted(result["effect"].unique())
+    labels = [m.label for m in method_list]
+    y = np.arange(len(labels))
+    fig, axes = plt.subplots(len(baselines), len(panels), sharey=True, sharex="col",
+                             figsize=(12, 0.42 * len(labels) * len(baselines) + 2.2),
+                             gridspec_kw={"wspace": 0.08, "hspace": 0.32})
+    for r, baseline in enumerate(baselines):
+        for c, (column, title, percent) in enumerate(panels):
+            ax = axes[r, c]
+            for effect in effects:
+                block = result[(result["baseline"] == baseline) & (result["effect"] == effect)]
+                values = block.set_index("method")[column].reindex(labels).to_numpy()
+                strongest = effect == effects[-1]
+                for i, m in enumerate(method_list):
+                    color = COLORS[m.family]
+                    ax.plot([values[i]], [y[i]], linestyle="none",
+                            marker="D" if m.key.endswith("_level") else "o",
+                            ms=7 if strongest else 6,
+                            mfc=color if strongest else SURFACE, mec=SURFACE if strongest else color,
+                            mew=1.5 if strongest else 1.8, zorder=3)
+            ax.set_title(f"{title}\n{baseline} baseline", fontsize=9)
+            ax.grid(axis="y", visible=False)
+            if percent:
+                ax.xaxis.set_major_formatter(matplotlib.ticker.PercentFormatter(1.0, decimals=0))
+                ax.set_xlim(0, 1)
+            ax.set_yticks(y, labels)
+    axes[0, 0].invert_yaxis()
+    handles = [
+        plt.Line2D([], [], linestyle="none", marker="o", ms=7, mfc=INK_2, mec=SURFACE,
+                   label=f"rate x{effects[-1]:g}"),
+        plt.Line2D([], [], linestyle="none", marker="o", ms=6, mfc=SURFACE, mec=INK_2, mew=1.8,
+                   label=f"rate x{effects[0]:g}"),
+    ]
+    axes[0, -1].legend(handles=handles, loc="upper left", bbox_to_anchor=(1.02, 1.0),
+                       borderaxespad=0, title="Size of the signal")
+    fig.text(0.125, 0.0,
+             f"Every method tuned to {target_far:.0%} false alarms on simulated null pairs. "
+             "A signal that is never detected counts as detected at the end of the window.",
+             fontsize=8, color=INK_2)
+    fig.savefig(path)
+    plt.close(fig)
+
+
+def decision_thresholds(table, path):
+    """Optimal belief threshold against the cost of a false alarm."""
+    ramp = ["#86b6ef", "#2a78d6", "#104281"]   # one hue, light to dark, for an ordered quantity
+    models = list(dict.fromkeys(table["parameters"]))
+    fig, axes = plt.subplots(1, len(models), figsize=(5.2 * len(models), 3.9), sharey=True,
+                             gridspec_kw={"wspace": 0.08})
+    axes = np.atleast_1d(axes)
+    for ax, model in zip(axes, models):
+        block = table[table["parameters"] == model]
+        for color, (expected, rows) in zip(ramp, block.groupby("expected_per_quarter")):
+            ax.plot(rows["cost_ratio"], rows["optimal_threshold"], color=color,
+                    label=f"{expected:g} expected reports per quarter")
+        ax.axhline(0.5, color=REFERENCE, linewidth=1)
+        ax.set_xscale("log", base=2)
+        ax.xaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:g}"))
+        ax.set_ylim(0, 1)
+        ax.set_title(f"HMM, {model}")
+        ax.set_xlabel("Cost of a false alarm, in quarters of undetected risk")
+    axes[0].set_ylabel("Optimal belief threshold")
+    axes[-1].legend(loc="upper left", bbox_to_anchor=(1.02, 1.0), borderaxespad=0)
+    fig.savefig(path)
+    plt.close(fig)

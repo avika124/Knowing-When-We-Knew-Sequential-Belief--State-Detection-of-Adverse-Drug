@@ -1,0 +1,127 @@
+parameters,expected_per_quarter,cost_ratio,optimal_threshold
+prior parameters,2.0,0.5,0.01
+prior parameters,2.0,0.7071,0.015
+prior parameters,2.0,1.0,0.0225
+prior parameters,2.0,1.4142,0.0375
+prior parameters,2.0,2.0,0.0575
+prior parameters,2.0,2.8284,0.1
+prior parameters,2.0,4.0,0.17
+prior parameters,2.0,5.6569,0.28
+prior parameters,2.0,8.0,0.4225
+prior parameters,2.0,11.3137,0.5675
+prior parameters,2.0,16.0,0.6925
+prior parameters,2.0,22.6274,0.7875
+prior parameters,2.0,32.0,0.855
+prior parameters,2.0,45.2548,0.9
+prior parameters,2.0,64.0,0.9325
+prior parameters,2.0,90.5097,0.9525
+prior parameters,2.0,128.0,0.9675
+prior parameters,2.0,181.0193,0.9775
+prior parameters,2.0,256.0,0.985
+prior parameters,2.0,362.0387,0.99
+prior parameters,2.0,512.0,0.9925
+prior parameters,10.0,0.5,0.0125
+prior parameters,10.0,0.7071,0.02
+prior parameters,10.0,1.0,0.0325
+prior parameters,10.0,1.4142,0.055
+prior parameters,10.0,2.0,0.1
+prior parameters,10.0,2.8284,0.18
+prior parameters,10.0,4.0,0.305
+prior parameters,10.0,5.6569,0.4575
+prior parameters,10.0,8.0,0.605
+prior parameters,10.0,11.3137,0.72
+prior parameters,10.0,16.0,0.8075
+prior parameters,10.0,22.6274,0.8675
+prior parameters,10.0,32.0,0.9075
+prior parameters,10.0,45.2548,0.9375
+prior parameters,10.0,64.0,0.9575
+prior parameters,10.0,90.5097,0.97
+prior parameters,10.0,128.0,0.98
+prior parameters,10.0,181.0193,0.985
+prior parameters,10.0,256.0,0.99
+prior parameters,10.0,362.0387,0.9925
+prior parameters,10.0,512.0,0.995
+prior parameters,50.0,0.5,0.0125
+prior parameters,50.0,0.7071,0.0225
+prior parameters,50.0,1.0,0.0375
+prior parameters,50.0,1.4142,0.0675
+prior parameters,50.0,2.0,0.125
+prior parameters,50.0,2.8284,0.225
+prior parameters,50.0,4.0,0.3675
+prior parameters,50.0,5.6569,0.52
+prior parameters,50.0,8.0,0.655
+prior parameters,50.0,11.3137,0.7575
+prior parameters,50.0,16.0,0.8325
+prior parameters,50.0,22.6274,0.885
+prior parameters,50.0,32.0,0.92
+prior parameters,50.0,45.2548,0.945
+prior parameters,50.0,64.0,0.9625
+prior parameters,50.0,90.5097,0.975
+prior parameters,50.0,128.0,0.9825
+prior parameters,50.0,181.0193,0.9875
+prior parameters,50.0,256.0,0.9925
+prior parameters,50.0,362.0387,0.995
+prior parameters,50.0,512.0,0.9975
+Baum-Welch,2.0,0.5,0.0125
+Baum-Welch,2.0,0.7071,0.0225
+Baum-Welch,2.0,1.0,0.04
+Baum-Welch,2.0,1.4142,0.08
+Baum-Welch,2.0,2.0,0.16
+Baum-Welch,2.0,2.8284,0.295
+Baum-Welch,2.0,4.0,0.4575
+Baum-Welch,2.0,5.6569,0.61
+Baum-Welch,2.0,8.0,0.73
+Baum-Welch,2.0,11.3137,0.815
+Baum-Welch,2.0,16.0,0.8725
+Baum-Welch,2.0,22.6274,0.9125
+Baum-Welch,2.0,32.0,0.94
+Baum-Welch,2.0,45.2548,0.96
+Baum-Welch,2.0,64.0,0.9725
+Baum-Welch,2.0,90.5097,0.98
+Baum-Welch,2.0,128.0,0.9875
+Baum-Welch,2.0,181.0193,0.99
+Baum-Welch,2.0,256.0,0.995
+Baum-Welch,2.0,362.0387,0.995
+Baum-Welch,2.0,512.0,0.9975
+Baum-Welch,10.0,0.5,0.025
+Baum-Welch,10.0,0.7071,0.0475
+Baum-Welch,10.0,1.0,0.095
+Baum-Welch,10.0,1.4142,0.18
+Baum-Welch,10.0,2.0,0.3125
+Baum-Welch,10.0,2.8284,0.465
+Baum-Welch,10.0,4.0,0.6075
+Baum-Welch,10.0,5.6569,0.72
+Baum-Welch,10.0,8.0,0.805
+Baum-Welch,10.0,11.3137,0.8625
+Baum-Welch,10.0,16.0,0.905
+Baum-Welch,10.0,22.6274,0.935
+Baum-Welch,10.0,32.0,0.955
+Baum-Welch,10.0,45.2548,0.9675
+Baum-Welch,10.0,64.0,0.9775
+Baum-Welch,10.0,90.5097,0.985
+Baum-Welch,10.0,128.0,0.99
+Baum-Welch,10.0,181.0193,0.9925
+Baum-Welch,10.0,256.0,0.995
+Baum-Welch,10.0,362.0387,0.9975
+Baum-Welch,10.0,512.0,0.9975
+Baum-Welch,50.0,0.5,0.0325
+Baum-Welch,50.0,0.7071,0.0625
+Baum-Welch,50.0,1.0,0.12
+Baum-Welch,50.0,1.4142,0.22
+Baum-Welch,50.0,2.0,0.36
+Baum-Welch,50.0,2.8284,0.5075
+Baum-Welch,50.0,4.0,0.6375
+Baum-Welch,50.0,5.6569,0.7425
+Baum-Welch,50.0,8.0,0.8175
+Baum-Welch,50.0,11.3137,0.8725
+Baum-Welch,50.0,16.0,0.9125
+Baum-Welch,50.0,22.6274,0.9375
+Baum-Welch,50.0,32.0,0.9575
+Baum-Welch,50.0,45.2548,0.97
+Baum-Welch,50.0,64.0,0.98
+Baum-Welch,50.0,90.5097,0.985
+Baum-Welch,50.0,128.0,0.99
+Baum-Welch,50.0,181.0193,0.9925
+Baum-Welch,50.0,256.0,0.995
+Baum-Welch,50.0,362.0387,0.9975
+Baum-Welch,50.0,512.0,0.9975

@@ -1,0 +1,19 @@
+parameters,expected_per_quarter,belief_threshold,implied_cost_ratio
+prior parameters,2.0,0.5,9.56
+prior parameters,2.0,0.9,44.76
+prior parameters,2.0,0.99,335.87
+prior parameters,10.0,0.5,6.2
+prior parameters,10.0,0.9,29.12
+prior parameters,10.0,0.99,220.91
+prior parameters,50.0,0.5,5.38
+prior parameters,50.0,0.9,25.59
+prior parameters,50.0,0.99,195.62
+Baum-Welch,2.0,0.5,4.36
+Baum-Welch,2.0,0.9,19.67
+Baum-Welch,2.0,0.99,148.17
+Baum-Welch,10.0,0.5,3.06
+Baum-Welch,10.0,0.9,15.03
+Baum-Welch,10.0,0.99,116.85
+Baum-Welch,50.0,0.5,2.77
+Baum-Welch,50.0,0.9,14.06
+Baum-Welch,50.0,0.99,110.4
