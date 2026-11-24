@@ -48,8 +48,9 @@ def setup():
 def _plain_log(ax):
     """Log axis with plain tick labels (0.5, 1, 2, 10) instead of powers of ten."""
     ax.set_yscale("log")
-    fmt = matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:g}")
-    ax.yaxis.set_major_formatter(fmt)
+    # label 1, 2 and 5 in each decade so a narrow range still gets a readable scale
+    ax.yaxis.set_major_locator(matplotlib.ticker.LogLocator(base=10, subs=(1.0, 2.0, 5.0)))
+    ax.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:g}"))
     ax.yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
 
 
