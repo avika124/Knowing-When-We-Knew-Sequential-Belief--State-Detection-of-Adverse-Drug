@@ -152,7 +152,8 @@ Two parameter sets are compared:
 
 Baum-Welch was trained on the 163 tuning pairs with their labels hidden. It
 converged in 14 iterations and reached the same optimum from three different
-starting points. It recovers a sensible structure without supervision: a
+starting points (the restarts are recorded in
+`results/tables/hmm_parameters.json`). It recovers a sensible structure without supervision: a
 "safe" state that reports at the background rate and a "risky" state at about
 3.4 times it.
 

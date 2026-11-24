@@ -89,8 +89,21 @@ def main():
     # ---------------------------------------------------------- Baum-Welch
     seqs = sequences(counts)
     prior = hmm.default_params()
-    fit = hmm.baum_welch([(seqs[p][1], seqs[p][2]) for p in tune_pool], prior)
+    train = [(seqs[p][1], seqs[p][2]) for p in tune_pool]
+    fit = hmm.baum_welch(train, prior)
     models = {"hmm_prior": prior, "hmm_bw": fit.params}
+
+    # EM only finds a local optimum, so restart it from two distant starting
+    # points and record where each one ends up.
+    restarts = []
+    for start in (
+        hmm.default_params(pi_risky=0.3, p_shift=0.1, rho_safe=0.5, rho_risky=5.0, k=1.0),
+        hmm.default_params(pi_risky=0.5, p_shift=0.01, rho_safe=1.5, rho_risky=3.0, k=10.0),
+    ):
+        again = hmm.baum_welch(train, start)
+        restarts.append({"start": start.as_dict(), "end": again.params.as_dict(),
+                         "objective": again.log_likelihood[-1],
+                         "iterations": len(again.log_likelihood)})
     (tables / "hmm_parameters.json").write_text(json.dumps({
         "prior": prior.as_dict(),
         "baum_welch": fit.params.as_dict(),
@@ -98,6 +111,7 @@ def main():
         "baum_welch_iterations": len(fit.log_likelihood),
         "baum_welch_converged": fit.converged,
         "baum_welch_objective": fit.log_likelihood,
+        "baum_welch_restarts": restarts,
     }, indent=2) + "\n")
     plots.convergence(fit.log_likelihood, figures / "baum_welch_convergence.png")
 

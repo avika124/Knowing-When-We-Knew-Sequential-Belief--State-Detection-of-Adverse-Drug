@@ -35,5 +35,51 @@
     -7664.292351019468,
     -7664.2915102170455,
     -7664.291264339928
+  ],
+  "baum_welch_restarts": [
+    {
+      "start": {
+        "pi_risky": 0.3,
+        "p_safe_to_risky": 0.1,
+        "p_risky_to_safe": 0.0,
+        "rho_safe": 0.5,
+        "rho_risky": 5.0,
+        "k_safe": 1.0,
+        "k_risky": 1.0
+      },
+      "end": {
+        "pi_risky": 0.2704255491318179,
+        "p_safe_to_risky": 0.010702905813676151,
+        "p_risky_to_safe": 0.0,
+        "rho_safe": 0.9583705088571828,
+        "rho_risky": 3.3510937186396967,
+        "k_safe": 2.361356143952166,
+        "k_risky": 4.99561822237382
+      },
+      "objective": -7664.291319298203,
+      "iterations": 15
+    },
+    {
+      "start": {
+        "pi_risky": 0.5,
+        "p_safe_to_risky": 0.01,
+        "p_risky_to_safe": 0.0,
+        "rho_safe": 1.5,
+        "rho_risky": 3.0,
+        "k_safe": 10.0,
+        "k_risky": 10.0
+      },
+      "end": {
+        "pi_risky": 0.2701264008711417,
+        "p_safe_to_risky": 0.010667881600725937,
+        "p_risky_to_safe": 0.0,
+        "rho_safe": 0.9591241076785254,
+        "rho_risky": 3.3529625755930437,
+        "k_safe": 2.359006278256559,
+        "k_risky": 5.004051406987936
+      },
+      "objective": -7664.291373437116,
+      "iterations": 10
+    }
   ]
 }
