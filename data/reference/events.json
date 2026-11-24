@@ -1,0 +1,56 @@
+{
+  "acute_mi": {
+    "label": "Myocardial infarction",
+    "preferred_terms": ["Myocardial infarction", "Acute myocardial infarction"]
+  },
+  "acute_liver_injury": {
+    "label": "Acute liver injury",
+    "preferred_terms": [
+      "Hepatic failure", "Acute hepatic failure", "Hepatitis acute", "Hepatitis fulminant",
+      "Hepatic necrosis", "Hepatotoxicity", "Drug-induced liver injury", "Liver injury",
+      "Hepatocellular injury", "Hepatocellular damage", "Hepatitis toxic", "Hepatitis cholestatic",
+      "Cholestatic liver injury", "Mixed liver injury"
+    ]
+  },
+  "acute_renal_failure": {
+    "label": "Acute renal failure",
+    "preferred_terms": [
+      "Renal failure acute", "Acute kidney injury", "Renal failure",
+      "Renal tubular necrosis", "Acute prerenal failure"
+    ]
+  },
+  "upper_gi_bleed": {
+    "label": "Upper GI bleeding",
+    "preferred_terms": [
+      "Gastrointestinal haemorrhage", "Upper gastrointestinal haemorrhage", "Gastric haemorrhage",
+      "Gastric ulcer haemorrhage", "Duodenal ulcer haemorrhage", "Peptic ulcer haemorrhage",
+      "Oesophageal haemorrhage", "Haematemesis", "Melaena"
+    ]
+  },
+  "rhabdomyolysis": {
+    "label": "Rhabdomyolysis",
+    "preferred_terms": ["Rhabdomyolysis"]
+  },
+  "ischaemic_cv_event": {
+    "label": "Ischaemic cardiovascular event",
+    "preferred_terms": [
+      "Myocardial infarction", "Acute myocardial infarction", "Angina pectoris", "Angina unstable",
+      "Myocardial ischaemia", "Cerebrovascular accident", "Ischaemic stroke"
+    ]
+  },
+  "suicidality": {
+    "label": "Suicidal ideation or behaviour",
+    "preferred_terms": ["Suicidal ideation", "Suicide attempt", "Completed suicide", "Suicidal behaviour"]
+  },
+  "pancreatitis": {
+    "label": "Acute pancreatitis",
+    "preferred_terms": ["Pancreatitis", "Pancreatitis acute", "Pancreatitis necrotising", "Pancreatitis haemorrhagic"]
+  },
+  "cardiac_valve_disease": {
+    "label": "Cardiac valve disease",
+    "preferred_terms": [
+      "Cardiac valve disease", "Mitral valve incompetence", "Aortic valve incompetence",
+      "Tricuspid valve incompetence", "Heart valve incompetence"
+    ]
+  }
+}
