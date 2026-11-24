@@ -1,0 +1,51 @@
+{
+  "replay_window": [
+    "2004Q1",
+    "2010Q4"
+  ],
+  "target_false_alarm_rate": 0.1,
+  "min_drug_reports": 100,
+  "control_pairs_dropped_for_low_exposure": 54,
+  "n_pairs": {
+    "tune_neg": 94,
+    "tune_pos": 69,
+    "test_neg": 93,
+    "test_pos": 78
+  },
+  "n_cases": 7,
+  "n_evaluable_cases": 6,
+  "matched_thresholds": {
+    "PRR": {
+      "score": "prr_lower",
+      "threshold": 2.5726183165629677
+    },
+    "ROR": {
+      "score": "ror_lower",
+      "threshold": 2.629189263275389
+    },
+    "BCPNN": {
+      "score": "ic025",
+      "threshold": 1.247569135433147
+    },
+    "GPS": {
+      "score": "eb05",
+      "threshold": 2.452797999602645
+    },
+    "HMM (prior)": {
+      "score": "hmm_prior_logodds",
+      "threshold": 22.777997969232946
+    },
+    "HMM (Baum-Welch)": {
+      "score": "hmm_bw_logodds",
+      "threshold": 25.94704198279251
+    },
+    "HMM (prior, level)": {
+      "score": "hmm_prior_level",
+      "threshold": 1.090262752755747
+    },
+    "HMM (Baum-Welch, level)": {
+      "score": "hmm_bw_level",
+      "threshold": 0.8736542588307638
+    }
+  }
+}

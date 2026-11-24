@@ -1,0 +1,15 @@
+method,operating_point,rule,far_tune_neg,far_test_neg,sens_test_pos
+PRR,conventional,"PRR >= 2, chi-square >= 4, cases >= 3",0.2766,0.3763,0.5385
+PRR,matched,prr_lower >= 2.573,0.0957,0.0645,0.359
+ROR,conventional,lower 95% bound > 1,0.3723,0.4946,0.6923
+ROR,matched,ror_lower >= 2.629,0.0957,0.0645,0.359
+BCPNN,conventional,IC025 > 0,0.3404,0.4301,0.6795
+BCPNN,matched,ic025 >= 1.248,0.0957,0.0538,0.3205
+GPS,conventional,EB05 >= 2,0.1596,0.1398,0.4487
+GPS,matched,eb05 >= 2.453,0.0957,0.0645,0.3462
+HMM (prior),conventional,belief >= 0.5,0.4468,0.5806,0.6923
+HMM (prior),matched,hmm_prior_logodds >= 22.78,0.0957,0.0108,0.2949
+HMM (Baum-Welch),conventional,belief >= 0.5,0.4255,0.5269,0.6026
+HMM (Baum-Welch),matched,hmm_bw_logodds >= 25.95,0.0957,0.0108,0.2692
+"HMM (prior, level)",matched,hmm_prior_level >= 1.09,0.0957,0.043,0.2564
+"HMM (Baum-Welch, level)",matched,hmm_bw_level >= 0.8737,0.0851,0.0645,0.3077
