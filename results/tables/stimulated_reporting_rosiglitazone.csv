@@ -1,0 +1,6 @@
+period,first_quarter,last_quarter,drug_reports,drug_reports_with_mi,share_with_mi,observed_over_expected
+before the FDA alert,2004Q1,2007Q1,10355,276,0.0267,0.68
+alert to access restriction,2007Q2,2010Q3,18908,6418,0.3394,21.95
+restricted access,2010Q4,2013Q4,26510,11527,0.4348,39.7
+2014,2014Q1,2014Q4,46491,19758,0.425,45.69
+2015 onward,2015Q1,2026Q3,2030,212,0.1044,15.1

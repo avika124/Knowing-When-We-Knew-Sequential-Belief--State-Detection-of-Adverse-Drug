@@ -1,0 +1,9 @@
+method,auc,n_pos,n_neg
+PRR,0.6999,78,93
+ROR,0.7006,78,93
+BCPNN,0.6988,78,93
+GPS,0.6959,78,93
+HMM (prior),0.6362,78,93
+HMM (Baum-Welch),0.6319,78,93
+"HMM (prior, level)",0.6718,78,93
+"HMM (Baum-Welch, level)",0.6707,78,93
