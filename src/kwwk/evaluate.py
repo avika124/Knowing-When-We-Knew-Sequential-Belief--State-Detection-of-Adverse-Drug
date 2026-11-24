@@ -7,6 +7,7 @@ import pandas as pd
 
 from .alarm import (
     alarm_date,
+    detection_rate,
     eligible_scores,
     false_alarm_rate,
     first_alarm,
@@ -85,7 +86,7 @@ def operating_points(replay, method_list, ids, target_far):
                 "rule": m.rule if kind == "conventional" else f"{m.score} >= {threshold:.4g}",
                 "far_tune_neg": false_alarm_rate(subset(matrix, ids["tune_neg"]), threshold, strict),
                 "far_test_neg": false_alarm_rate(subset(matrix, ids["test_neg"]), threshold, strict),
-                "sens_test_pos": false_alarm_rate(subset(matrix, ids["test_pos"]), threshold, strict),
+                "sens_test_pos": detection_rate(subset(matrix, ids["test_pos"]), threshold, strict),
             })
     return pd.DataFrame(rows), tuned
 
