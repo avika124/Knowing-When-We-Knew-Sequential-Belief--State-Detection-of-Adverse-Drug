@@ -232,6 +232,10 @@ def detection_level(a, expected, params, levels=None):
     for t in range(T):
         if t > 0:
             log_alpha = logsumexp(log_alpha[:, :, None] + log_A[None, :, :], axis=1) + loglik[t]
+        # Raising the level scales both emission rates up together, so it only
+        # ever makes a quarter look more normal: ``flagged`` is True for an
+        # unbroken run of the lowest levels and False above it.  The score is
+        # the top of that run, so the largest flagged index is its boundary.
         flagged = log_alpha[:, RISKY] >= log_alpha[:, SAFE]
         if flagged.any():
             out[t] = np.log(levels[np.nonzero(flagged)[0].max()])

@@ -35,6 +35,11 @@ class OpenFDAClient:
         self.last_updated = None
 
     def _cache_path(self, search):
+        # The cache key is the search expression alone; the aggregation is
+        # always count=receivedate, so it need not be part of the key.  A cache
+        # therefore belongs to one openFDA release: delete it to refetch after
+        # an openFDA update.  The committed snapshot pins a single release, so
+        # the replay is reproducible without touching the network at all.
         key = hashlib.sha1((search or "__all__").encode()).hexdigest()
         return self.cache_dir / f"{key}.json"
 

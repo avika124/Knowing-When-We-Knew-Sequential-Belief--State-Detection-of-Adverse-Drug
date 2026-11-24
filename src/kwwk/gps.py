@@ -62,9 +62,11 @@ def fit_prior(n, expected, start=DEFAULT_PRIOR):
     theta0 = _pack(start)
     bounds = [(-7, 7)] * 4 + [(-7, 7)]
     res = minimize(neg_log_marginal, theta0, args=(n, expected), method="L-BFGS-B", bounds=bounds)
-    if not res.success and not np.isfinite(res.fun):
-        return tuple(start)
-    if res.fun > neg_log_marginal(theta0, n, expected):
+    # Keep the fit only when it is a finite improvement on the starting point.
+    # L-BFGS-B may report success=False yet still return a usable optimum, and a
+    # tiny or almost-all-zero pool can leave it no better than where it began;
+    # both cases fall back to ``start``.
+    if not np.isfinite(res.fun) or res.fun > neg_log_marginal(theta0, n, expected):
         return tuple(start)
     return tuple(float(x) for x in _unpack(res.x))
 

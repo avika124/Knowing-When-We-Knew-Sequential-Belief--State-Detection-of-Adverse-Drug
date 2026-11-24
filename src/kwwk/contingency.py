@@ -58,6 +58,10 @@ def cumulative(df):
 
 
 def load_contingency(path, first=None, last=None):
+    # Quarter labels are compared as strings here and throughout the replay.
+    # The "YYYYQn" layout has a fixed-width year first and n in 1-4, so
+    # lexicographic order is the same as chronological order; this is the
+    # cut-off that enforces the no-look-ahead window, so the ordering matters.
     df = pd.read_csv(path)
     if first:
         df = df[df["quarter"] >= first]

@@ -89,6 +89,12 @@ def false_alarm_rate(scores, threshold, strict=False):
     return float((first_alarm(scores.to_numpy(), threshold, strict) >= 0).mean())
 
 
+# Sensitivity is the same computation -- the share of pairs that ever alarm --
+# applied to known positives rather than negative controls.  The alias keeps
+# the intent readable at the call site.
+detection_rate = false_alarm_rate
+
+
 def tune_threshold(negative_scores, target_far):
     """Smallest threshold whose false-alarm rate on the negatives is <= target.
 
