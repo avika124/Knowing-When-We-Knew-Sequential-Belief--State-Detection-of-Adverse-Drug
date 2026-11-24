@@ -1,0 +1,8 @@
+{
+  "source": "openFDA drug adverse event API (FAERS)",
+  "openfda_last_updated": "2026-10-28",
+  "fetched_on": "2026-11-24",
+  "first_quarter": "2004Q1",
+  "last_quarter": "2026Q3",
+  "n_pairs": 395
+}
