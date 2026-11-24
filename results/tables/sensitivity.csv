@@ -1,0 +1,91 @@
+min_drug_reports,target_far,operating_point,method,n_test_neg,far_test_neg,sens_test_pos,cases_alarm_before_action,cases_standing_at_action,n_cases
+50,,conventional,PRR,103,0.3495,0.5238,3,2,6
+50,,conventional,ROR,103,0.466,0.6667,3,2,6
+50,,conventional,BCPNN,103,0.3981,0.6548,3,2,6
+50,,conventional,GPS,103,0.1262,0.4286,2,2,6
+50,,conventional,HMM (prior),103,0.5437,0.6786,2,2,6
+50,,conventional,HMM (Baum-Welch),103,0.4854,0.5952,4,2,6
+100,,conventional,PRR,93,0.3763,0.5385,3,2,6
+100,,conventional,ROR,93,0.4946,0.6923,3,2,6
+100,,conventional,BCPNN,93,0.4301,0.6795,3,2,6
+100,,conventional,GPS,93,0.1398,0.4487,2,2,6
+100,,conventional,HMM (prior),93,0.5806,0.6923,2,2,6
+100,,conventional,HMM (Baum-Welch),93,0.5269,0.6026,4,2,6
+200,,conventional,PRR,85,0.4,0.5556,3,2,6
+200,,conventional,ROR,85,0.5294,0.7222,3,2,6
+200,,conventional,BCPNN,85,0.4706,0.7222,3,2,6
+200,,conventional,GPS,85,0.1529,0.4722,2,2,6
+200,,conventional,HMM (prior),85,0.6235,0.7083,2,2,6
+200,,conventional,HMM (Baum-Welch),85,0.5647,0.6111,4,2,6
+50,0.05,matched,PRR,103,0.0388,0.2619,2,2,6
+50,0.05,matched,ROR,103,0.0388,0.2381,2,2,6
+50,0.05,matched,BCPNN,103,0.0291,0.2024,2,2,6
+50,0.05,matched,GPS,103,0.0291,0.2143,2,2,6
+50,0.05,matched,HMM (prior),103,0.0097,0.2143,1,1,6
+50,0.05,matched,HMM (Baum-Welch),103,0.0097,0.2143,1,1,6
+50,0.05,matched,"HMM (prior, level)",103,0.0388,0.2143,2,2,6
+50,0.05,matched,"HMM (Baum-Welch, level)",103,0.0485,0.2143,2,2,6
+50,0.1,matched,PRR,103,0.068,0.3452,2,2,6
+50,0.1,matched,ROR,103,0.068,0.3452,2,2,6
+50,0.1,matched,BCPNN,103,0.0485,0.2976,2,2,6
+50,0.1,matched,GPS,103,0.0583,0.3214,2,2,6
+50,0.1,matched,HMM (prior),103,0.0097,0.2738,1,1,6
+50,0.1,matched,HMM (Baum-Welch),103,0.0097,0.25,1,1,6
+50,0.1,matched,"HMM (prior, level)",103,0.0485,0.2619,2,2,6
+50,0.1,matched,"HMM (Baum-Welch, level)",103,0.068,0.3095,2,2,6
+50,0.2,matched,PRR,103,0.165,0.5,2,2,6
+50,0.2,matched,ROR,103,0.165,0.5,2,2,6
+50,0.2,matched,BCPNN,103,0.2233,0.4881,3,2,6
+50,0.2,matched,GPS,103,0.165,0.4881,2,2,6
+50,0.2,matched,HMM (prior),103,0.1748,0.4167,2,2,6
+50,0.2,matched,HMM (Baum-Welch),103,0.1456,0.4405,2,2,6
+50,0.2,matched,"HMM (prior, level)",103,0.1456,0.4643,2,2,6
+50,0.2,matched,"HMM (Baum-Welch, level)",103,0.1553,0.4405,2,2,6
+100,0.05,matched,PRR,93,0.0323,0.2692,2,2,6
+100,0.05,matched,ROR,93,0.0323,0.2436,2,2,6
+100,0.05,matched,BCPNN,93,0.0323,0.2179,2,2,6
+100,0.05,matched,GPS,93,0.0323,0.2308,2,2,6
+100,0.05,matched,HMM (prior),93,0.0108,0.2308,1,1,6
+100,0.05,matched,HMM (Baum-Welch),93,0.0108,0.2308,1,1,6
+100,0.05,matched,"HMM (prior, level)",93,0.0323,0.2051,2,2,6
+100,0.05,matched,"HMM (Baum-Welch, level)",93,0.043,0.2179,2,2,6
+100,0.1,matched,PRR,93,0.0645,0.359,2,2,6
+100,0.1,matched,ROR,93,0.0645,0.359,2,2,6
+100,0.1,matched,BCPNN,93,0.0538,0.3205,2,2,6
+100,0.1,matched,GPS,93,0.0645,0.3462,2,2,6
+100,0.1,matched,HMM (prior),93,0.0108,0.2949,1,1,6
+100,0.1,matched,HMM (Baum-Welch),93,0.0108,0.2692,1,1,6
+100,0.1,matched,"HMM (prior, level)",93,0.043,0.2564,2,2,6
+100,0.1,matched,"HMM (Baum-Welch, level)",93,0.0645,0.3077,2,2,6
+100,0.2,matched,PRR,93,0.1505,0.4615,2,2,6
+100,0.2,matched,ROR,93,0.1613,0.4615,2,2,6
+100,0.2,matched,BCPNN,93,0.1613,0.4744,2,2,6
+100,0.2,matched,GPS,93,0.1613,0.4744,2,2,6
+100,0.2,matched,HMM (prior),93,0.1935,0.4487,2,2,6
+100,0.2,matched,HMM (Baum-Welch),93,0.1505,0.4487,2,2,6
+100,0.2,matched,"HMM (prior, level)",93,0.129,0.4359,2,2,6
+100,0.2,matched,"HMM (Baum-Welch, level)",93,0.1505,0.4231,2,2,6
+200,0.05,matched,PRR,85,0.0353,0.2778,2,2,6
+200,0.05,matched,ROR,85,0.0353,0.25,2,2,6
+200,0.05,matched,BCPNN,85,0.0353,0.2361,2,2,6
+200,0.05,matched,GPS,85,0.0353,0.25,2,2,6
+200,0.05,matched,HMM (prior),85,0.0118,0.25,1,1,6
+200,0.05,matched,HMM (Baum-Welch),85,0.0118,0.25,1,1,6
+200,0.05,matched,"HMM (prior, level)",85,0.0353,0.2083,2,2,6
+200,0.05,matched,"HMM (Baum-Welch, level)",85,0.0471,0.2222,2,2,6
+200,0.1,matched,PRR,85,0.0588,0.375,2,2,6
+200,0.1,matched,ROR,85,0.0706,0.375,2,2,6
+200,0.1,matched,BCPNN,85,0.0588,0.3333,2,2,6
+200,0.1,matched,GPS,85,0.0588,0.3472,2,2,6
+200,0.1,matched,HMM (prior),85,0.0118,0.3194,1,1,6
+200,0.1,matched,HMM (Baum-Welch),85,0.0118,0.2917,1,1,6
+200,0.1,matched,"HMM (prior, level)",85,0.0353,0.2222,2,2,6
+200,0.1,matched,"HMM (Baum-Welch, level)",85,0.0706,0.3194,2,2,6
+200,0.2,matched,PRR,85,0.1529,0.4861,2,2,6
+200,0.2,matched,ROR,85,0.1529,0.4861,2,2,6
+200,0.2,matched,BCPNN,85,0.1647,0.4861,2,2,6
+200,0.2,matched,GPS,85,0.1647,0.4722,2,2,6
+200,0.2,matched,HMM (prior),85,0.1294,0.4444,2,2,6
+200,0.2,matched,HMM (Baum-Welch),85,0.1529,0.4583,2,2,6
+200,0.2,matched,"HMM (prior, level)",85,0.1176,0.4306,2,2,6
+200,0.2,matched,"HMM (Baum-Welch, level)",85,0.1647,0.4444,2,2,6
