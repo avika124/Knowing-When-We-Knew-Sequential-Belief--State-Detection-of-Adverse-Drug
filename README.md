@@ -18,17 +18,24 @@ the FDA actually acted.
    pergolide) had an alarm standing when the FDA acted, and both were already
    signalling in the first quarter of available data. For rosiglitazone,
    tegaserod, exenatide and varenicline the reporting surge came *after* the
-   regulatory action, not before it.
-2. **The HMM reacts to a change in reporting much faster than the static
-   methods.** Once rosiglitazone's reporting shifted in 2007Q2, the HMM belief
-   crossed 0.5 that same quarter. BCPNN needed until 2008Q2 and GPS until
-   2009Q1, because cumulative scores are diluted by years of unremarkable
-   history.
-3. **That speed costs false alarms.** At belief >= 0.5 the HMM flags 53-58% of
-   held-out negative controls, against 14-50% for the static rules. When every
-   method is tuned to the same 10% false-alarm rate, no method flags any of
-   the four "surge after action" cases early.
-4. **Stimulated reporting dominates the rosiglitazone record.** Before the
+   regulatory action, not before it. This holds across every analysis setting
+   tried.
+2. **The HMM is the better detector of signals that emerge over time.** In a
+   simulation with known onsets, at a matched 10% false-alarm rate it detects
+   87% of signals that triple the reporting rate, against 59-67% for the
+   static methods, and about three quarters sooner. On real data the same
+   effect shows after the fact: once rosiglitazone's reporting shifted in
+   2007Q2 the HMM belief crossed 0.5 that same quarter, while BCPNN needed
+   until 2008Q2 and GPS until 2009Q1.
+3. **It is not better for signals that were always there.** When a pair is
+   elevated from its first report, cumulative scores are faster, because the
+   HMM starts from a prior that the pair is safe. Most known adverse reactions
+   in the reference set look like this.
+4. **Speed costs false alarms on real data.** At belief >= 0.5 the HMM flags
+   53-58% of held-out negative controls, against 14-50% for the static rules.
+   Read as a decision problem, a threshold of 0.5 is only optimal if a false
+   alarm costs roughly one to two years of undetected risk.
+5. **Stimulated reporting dominates the rosiglitazone record.** Before the
    FDA alert, 2.7% of rosiglitazone reports mentioned myocardial infarction,
    below the background rate. Afterwards the share rose to 34-43%.
 
@@ -187,6 +194,8 @@ both tunings are reported; the level-tuned HMM appears as "HMM (..., level)".
 - **Matched operating point:** each method's threshold is tuned on the tuning
   negative controls so that at most 10% of them ever alarm. False alarms are
   then measured on the held-out negative controls.
+- **Uncertainty.** Held-out rates carry 95% bootstrap intervals. Drugs are
+  resampled, not pairs, because pairs that share a drug are not independent.
 - **Cases are never used for training or tuning.**
 
 ## Results
@@ -197,27 +206,33 @@ False-alarm rate is the share of held-out negative controls that alarm at any
 point in the window. Sensitivity is the same share among held-out known
 positives.
 
-| Method | Rule | False alarms | Sensitivity |
+| Method | Rule | False alarms (95% interval) | Sensitivity (95% interval) |
 |---|---|---|---|
-| PRR | PRR >= 2, chi-square >= 4, cases >= 3 | 37.6% | 53.8% |
-| ROR | lower 95% bound > 1 | 49.5% | 69.2% |
-| BCPNN | IC025 > 0 | 43.0% | 67.9% |
-| GPS | EB05 >= 2 | 14.0% | 44.9% |
-| HMM (prior) | belief >= 0.5 | 58.1% | 69.2% |
-| HMM (Baum-Welch) | belief >= 0.5 | 52.7% | 60.3% |
+| PRR | PRR >= 2, chi-square >= 4, cases >= 3 | 37.6% (28-47) | 53.8% (44-63) |
+| ROR | lower 95% bound > 1 | 49.5% (38-60) | 69.2% (60-79) |
+| BCPNN | IC025 > 0 | 43.0% (32-53) | 67.9% (57-78) |
+| GPS | EB05 >= 2 | 14.0% (6-23) | 44.9% (33-55) |
+| HMM (prior) | belief >= 0.5 | 58.1% (47-69) | 69.2% (59-78) |
+| HMM (Baum-Welch) | belief >= 0.5 | 52.7% (41-64) | 60.3% (50-70) |
 
 Tuned to 10% false alarms on the tuning split:
 
 | Method | Tuned threshold | False alarms (held-out) | Sensitivity (held-out) |
 |---|---|---|---|
-| PRR | lower bound >= 2.57 | 6.5% | 35.9% |
-| ROR | lower bound >= 2.63 | 6.5% | 35.9% |
-| BCPNN | IC025 >= 1.25 | 5.4% | 32.1% |
-| GPS | EB05 >= 2.45 | 6.5% | 34.6% |
-| HMM (prior) | log-odds >= 22.8 | 1.1% | 29.5% |
-| HMM (Baum-Welch) | log-odds >= 25.9 | 1.1% | 26.9% |
-| HMM (prior, level) | level >= 2.98 | 4.3% | 25.6% |
-| HMM (Baum-Welch, level) | level >= 2.40 | 6.5% | 30.8% |
+| PRR | lower bound >= 2.57 | 6.5% (2-11) | 35.9% (26-47) |
+| ROR | lower bound >= 2.63 | 6.5% (2-11) | 35.9% (26-47) |
+| BCPNN | IC025 >= 1.25 | 5.4% (1-10) | 32.1% (22-43) |
+| GPS | EB05 >= 2.45 | 6.5% (2-12) | 34.6% (24-45) |
+| HMM (prior) | log-odds >= 22.8 | 1.1% (0-3) | 29.5% (18-41) |
+| HMM (Baum-Welch) | log-odds >= 25.9 | 1.1% (0-3) | 26.9% (16-38) |
+| HMM (prior, level) | level >= 2.98 | 4.3% (1-8) | 25.6% (17-35) |
+| HMM (Baum-Welch, level) | level >= 2.40 | 6.5% (2-11) | 30.8% (22-40) |
+
+The intervals are wide. With 93 held-out negative controls, differences of
+ten points between methods are within the noise. Two things are clear of it:
+GPS raises far fewer false alarms than the other conventional rules, and at
+the matched operating point the intervals of all eight detectors overlap
+heavily.
 
 Ranking known positives above negatives at the end of the window (ROC AUC on
 the held-out split): 0.70 for PRR, ROR, BCPNN and GPS, 0.67 for the level-tuned
@@ -294,6 +309,116 @@ six cases before the FDA action. A third case, the brief 2004 rosiglitazone
 crossing, is only caught at 16-20% false alarms for the static methods and 35%
 for the Baum-Welch HMM.
 
+## Where the HMM helps: a simulation with known onsets
+
+The real cases cannot say how fast a method detects a signal, because nobody
+knows when their true risk began. `scripts/run_simulation.py` answers that in
+a setting where the truth is known. Each synthetic pair borrows the real
+quarterly report volumes of a control pair, and only its drug-event count is
+simulated:
+
+    a_t ~ NegBin(mean = r_t * E_t, shape = 4)
+
+- **Null pairs** keep `r_t` at their baseline. They tune each method to 10%
+  false alarms and measure the false-alarm rate out of sample.
+- **Emerging signals** multiply `r_t` by 2 or 3 from a random onset between
+  quarters 9 and 21 of 28.
+- **Signals present from the start** are elevated from the first quarter.
+- **Baseline.** Clean pairs have a baseline of 1. Confounded pairs each draw
+  their own (log-normal, sd 0.5), which mimics confounding by indication.
+
+![Simulation](results/figures/simulation.png)
+
+Clean baseline, reporting rate tripled, 400 pairs per group:
+
+| Method | Emerging signals detected | Quarters from onset to alarm | Present from start: quarters to alarm |
+|---|---|---|---|
+| PRR | 59% | 8.4 | 5.5 |
+| BCPNN | 61% | 8.0 | 6.9 |
+| GPS | 67% | 7.7 | 9.9 |
+| HMM (prior) | 84% | 5.4 | 8.3 |
+| HMM (Baum-Welch) | 87% | 4.8 | 8.1 |
+
+A signal that is never detected counts as detected at the end of the window.
+Held-out false-alarm rates in these runs were between 8% and 16%.
+
+- **Emerging signals are where the HMM wins.** It detects 84-87% of them
+  against 59-67%, and about three quarters sooner. A cumulative score has to
+  outweigh all the unremarkable history before the onset; the HMM carries a
+  belief forward and only has to notice the change. The gap is wider for the
+  weaker signal: 64% against 26-43% when the rate doubles.
+- **Signals present from the start favour the cumulative scores.** PRR and
+  BCPNN alarm one to three quarters before the HMM, which begins from a prior
+  that the pair is safe.
+- **Confounding hurts everyone.** With pair-specific baselines every method
+  detects fewer signals, since a threshold loose enough to catch a doubling
+  now also catches confounded null pairs. The HMM keeps its lead on emerging
+  signals (45-57% against 28-34% when the rate triples).
+- **Baum-Welch recovers the truth.** Trained on unlabelled simulated pairs
+  with a clean baseline, it learns rates of 0.98 and 1.95 where the truth is
+  1 and 2, and 1.00 and 2.91 where the truth is 1 and 3
+  (`results/tables/simulation_baum_welch.csv`).
+
+This explains the real-data result. The HMM is built for emerging signals,
+and the OMOP reference set contains almost none: its positives are
+long-established reactions, already elevated when the data begins. And in the
+four historical cases where reporting did change, it changed after the FDA
+acted.
+
+## Alarm as a decision: the belief MDP
+
+A threshold on the belief hides a value judgement. `src/kwwk/decision.py`
+makes it explicit by treating the alarm as a decision under partial
+observability. Each quarter the monitor either raises the alarm or waits:
+
+- **Alarm.** If the pair is safe this is a false alarm, with expected cost
+  `c_false_alarm * (1 - p)`.
+- **Wait.** If the pair is already risky, the harm goes unflagged for another
+  quarter, with expected cost `c_delay * p`.
+
+The hidden state is never observed, so this is a POMDP. Its belief state is
+the single number `p`, which turns it into an ordinary MDP on [0, 1] that
+value iteration solves:
+
+    V(p) = min{ c_false_alarm * (1 - p),  c_delay * p + E[ V(p') ] }
+
+With a one-way safe -> risky chain this is the classic quickest-detection
+problem, and the optimal policy is a threshold on `p`. The only input that
+matters is the cost ratio: how many quarters of undetected risk one false
+alarm is worth.
+
+![Optimal threshold against cost ratio](results/figures/decision_thresholds.png)
+
+Read backwards, each threshold implies a cost ratio
+(`results/tables/decision_implied_costs.csv`):
+
+| Belief threshold | Implied cost of a false alarm, prior parameters | Baum-Welch parameters |
+|---|---|---|
+| 0.5 | 5-10 quarters | 3-4 quarters |
+| 0.9 | 26-45 quarters | 14-20 quarters |
+| 0.99 | 196-336 quarters | 110-148 quarters |
+
+The range in each cell is over 2 to 50 expected reports per quarter.
+
+So belief >= 0.5 is the right rule only if a false alarm costs roughly one to
+two years of undetected risk. And holding the HMM to 10% false alarms through
+its belief threshold needed log-odds near 23, a belief above 0.9999999999. No
+cost ratio one could defend supports waiting that long, which is a second way
+of seeing that the belief threshold is the wrong knob for confounded pairs
+and the baseline level is the right one.
+
+## Robustness
+
+Two choices in the main experiment are judgement calls: how many drug reports
+a control pair needs to be kept (100), and the false-alarm rate the matched
+thresholds target (10%). `scripts/run_sensitivity.py` reruns everything with
+50, 100 and 200 reports and with 5%, 10% and 20% targets.
+
+Across all nine settings and all eight detectors, no method ever has more
+than two of the six cases with an alarm standing when the FDA acted. Under the
+conventional rules the count is two for every method at every exposure filter.
+The full grid is in `results/tables/sensitivity.csv`.
+
 ## Failure-mode analysis
 
 ### Stimulated reporting
@@ -354,6 +479,9 @@ HMM back in line with the static methods at a matched false-alarm rate.
 - **Emission model.** Quarters are treated as independent given the state, and
   every pair shares one "safe" rate. A pair-specific baseline is the natural
   next step.
+- **Simulation.** The simulated counts follow the same negative-binomial
+  family the HMM assumes, which favours it. The report volumes are real, but
+  real reporting is burstier than the model.
 - **GPS prior.** Fitted on a few hundred tuning pairs without stratification,
   not on the whole database as the FDA does.
 
@@ -371,8 +499,19 @@ pytest
 python scripts/run_experiment.py
 ```
 
-`run_experiment.py` reads `data/processed/contingency.csv` and rewrites every
-table and figure in `results/`. It takes under a minute.
+`run_experiment.py` reads `data/processed/contingency.csv` and rewrites the
+main tables and figures in `results/`. It takes under a minute. The simulation
+study and the robustness grid are separate scripts, each a few minutes:
+
+```bash
+python scripts/run_simulation.py
+```
+
+```bash
+python scripts/run_sensitivity.py
+```
+
+Every script is seeded and deterministic.
 
 To rebuild the counts from openFDA (about 600 API requests, roughly 30
 minutes, no key required; set `OPENFDA_API_KEY` to raise the rate limit):
@@ -394,13 +533,17 @@ src/kwwk/
   bcpnn.py           Information Component
   gps.py             Gamma-Poisson Shrinker
   hmm.py             forward, backward, Viterbi, Baum-Welch, detection level
+  decision.py        value iteration on the belief MDP for the alarm decision
+  simulate.py        synthetic report streams with a known onset
+  experiment.py      pair selection, splits and HMM fitting shared by the scripts
   replay.py          quarter-by-quarter scoring with no look-ahead
   alarm.py           alarm rules, lead time, threshold tuning
   evaluate.py        operating points, case table, trade-off curves
   plots.py           figures
-scripts/             fetch_data.py, run_experiment.py
+scripts/             fetch_data.py, run_experiment.py, run_simulation.py,
+                     run_sensitivity.py
 tests/               unit tests, including brute-force checks of the HMM
-results/             tables and figures from the run described above
+results/             tables and figures from the runs described above
 ```
 
 ## References
