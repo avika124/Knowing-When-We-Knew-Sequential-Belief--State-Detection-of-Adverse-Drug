@@ -1,0 +1,69 @@
+[
+  {
+    "drug": "rosiglitazone",
+    "brand": "Avandia",
+    "drug_terms": ["rosiglitazone", "avandia", "avandamet", "avandaryl"],
+    "event": "acute_mi",
+    "action_date": "2007-05-21",
+    "action": "FDA safety alert on myocardial ischaemia risk (same day as Nissen & Wolski, NEJM)",
+    "later_action_date": "2007-11-14",
+    "later_action": "Boxed warning for myocardial ischaemia",
+    "tier": "core"
+  },
+  {
+    "drug": "rofecoxib",
+    "brand": "Vioxx",
+    "drug_terms": ["rofecoxib", "vioxx"],
+    "event": "acute_mi",
+    "action_date": "2004-09-30",
+    "action": "Worldwide market withdrawal",
+    "tier": "core"
+  },
+  {
+    "drug": "cerivastatin",
+    "brand": "Baycol",
+    "drug_terms": ["cerivastatin", "baycol", "lipobay"],
+    "event": "rhabdomyolysis",
+    "action_date": "2001-08-08",
+    "action": "Market withdrawal",
+    "tier": "core"
+  },
+  {
+    "drug": "tegaserod",
+    "brand": "Zelnorm",
+    "drug_terms": ["tegaserod", "zelnorm", "zelmac"],
+    "event": "ischaemic_cv_event",
+    "action_date": "2007-03-30",
+    "action": "FDA public health advisory; marketing suspended",
+    "tier": "stretch"
+  },
+  {
+    "drug": "pergolide",
+    "brand": "Permax",
+    "drug_terms": ["pergolide", "permax"],
+    "event": "cardiac_valve_disease",
+    "action_date": "2007-03-29",
+    "action": "FDA public health advisory; market withdrawal",
+    "tier": "stretch"
+  },
+  {
+    "drug": "exenatide",
+    "brand": "Byetta",
+    "drug_terms": ["exenatide", "byetta"],
+    "event": "pancreatitis",
+    "action_date": "2007-10-16",
+    "action": "FDA alert on postmarketing reports of acute pancreatitis",
+    "tier": "stretch"
+  },
+  {
+    "drug": "varenicline",
+    "brand": "Chantix",
+    "drug_terms": ["varenicline", "chantix", "champix"],
+    "event": "suicidality",
+    "action_date": "2007-11-20",
+    "action": "FDA early communication on suicidal thoughts and behaviour",
+    "later_action_date": "2009-07-01",
+    "later_action": "Boxed warning for neuropsychiatric events",
+    "tier": "stretch"
+  }
+]
