@@ -7,7 +7,6 @@ import pandas as pd
 
 from .alarm import (
     alarm_date,
-    detection_rate,
     eligible_scores,
     false_alarm_rate,
     first_alarm,
@@ -28,6 +27,23 @@ def roc_auc(positive, negative):
     greater = (positive[:, None] > negative[None, :]).sum()
     ties = (positive[:, None] == negative[None, :]).sum()
     return float((greater + 0.5 * ties) / (len(positive) * len(negative)))
+
+
+def cluster_interval(alarmed, clusters, n_boot=2000, level=0.95, seed=0):
+    """Bootstrap interval for an alarm rate, resampling whole drugs.
+
+    Pairs that share a drug are not independent (one drug's reports feed
+    several pairs), so drugs are resampled rather than pairs.
+    """
+    frame = pd.DataFrame({"alarmed": np.asarray(alarmed, float), "cluster": np.asarray(clusters)})
+    if frame.empty:
+        return float("nan"), float("nan")
+    grouped = frame.groupby("cluster")["alarmed"].agg(["sum", "count"]).to_numpy()
+    rng = np.random.default_rng(seed)
+    draw = rng.integers(len(grouped), size=(n_boot, len(grouped)))
+    rates = grouped[draw, 0].sum(axis=1) / grouped[draw, 1].sum(axis=1)
+    tail = (1 - level) / 2
+    return float(np.quantile(rates, tail)), float(np.quantile(rates, 1 - tail))
 
 
 def case_alarm(scores, pair_id, threshold, strict, action_date, first_quarter):
@@ -66,9 +82,18 @@ def operating_points(replay, method_list, ids, target_far):
 
     ``ids`` maps a group name to pair ids: tune_neg, test_neg, tune_pos, test_pos.
     The matched threshold is tuned on ``tune_neg`` only; everything measured on
-    the test groups is therefore out of sample.
+    the test groups is therefore out of sample.  The held-out rates come with
+    95% bootstrap intervals that resample drugs.
     """
     rows, tuned = [], {}
+    drug_of = replay.drop_duplicates("pair_id").set_index("pair_id")["drug"]
+
+    def rate_with_interval(matrix, group, threshold, strict):
+        block = subset(matrix, ids[group])
+        alarmed = first_alarm(block.to_numpy(), threshold, strict) >= 0
+        low, high = cluster_interval(alarmed, drug_of.reindex(block.index).to_numpy())
+        return (float(alarmed.mean()) if len(alarmed) else float("nan")), low, high
+
     for m in method_list:
         score = eligible_scores(replay, m.score)
         conv = eligible_scores(replay, m.conv_score)
@@ -80,13 +105,15 @@ def operating_points(replay, method_list, ids, target_far):
         ):
             if kind == "conventional" and not m.has_conventional:
                 continue
+            far, far_lo, far_hi = rate_with_interval(matrix, "test_neg", threshold, strict)
+            sens, sens_lo, sens_hi = rate_with_interval(matrix, "test_pos", threshold, strict)
             rows.append({
                 "method": m.label,
                 "operating_point": kind,
                 "rule": m.rule if kind == "conventional" else f"{m.score} >= {threshold:.4g}",
                 "far_tune_neg": false_alarm_rate(subset(matrix, ids["tune_neg"]), threshold, strict),
-                "far_test_neg": false_alarm_rate(subset(matrix, ids["test_neg"]), threshold, strict),
-                "sens_test_pos": detection_rate(subset(matrix, ids["test_pos"]), threshold, strict),
+                "far_test_neg": far, "far_test_neg_low": far_lo, "far_test_neg_high": far_hi,
+                "sens_test_pos": sens, "sens_test_pos_low": sens_lo, "sens_test_pos_high": sens_hi,
             })
     return pd.DataFrame(rows), tuned
 

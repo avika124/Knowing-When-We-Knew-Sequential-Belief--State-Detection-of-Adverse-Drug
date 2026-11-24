@@ -1,15 +1,15 @@
-method,operating_point,rule,far_tune_neg,far_test_neg,sens_test_pos
-PRR,conventional,"PRR >= 2, chi-square >= 4, cases >= 3",0.2766,0.3763,0.5385
-PRR,matched,prr_lower >= 2.573,0.0957,0.0645,0.359
-ROR,conventional,lower 95% bound > 1,0.3723,0.4946,0.6923
-ROR,matched,ror_lower >= 2.629,0.0957,0.0645,0.359
-BCPNN,conventional,IC025 > 0,0.3404,0.4301,0.6795
-BCPNN,matched,ic025 >= 1.248,0.0957,0.0538,0.3205
-GPS,conventional,EB05 >= 2,0.1596,0.1398,0.4487
-GPS,matched,eb05 >= 2.453,0.0957,0.0645,0.3462
-HMM (prior),conventional,belief >= 0.5,0.4468,0.5806,0.6923
-HMM (prior),matched,hmm_prior_logodds >= 22.78,0.0957,0.0108,0.2949
-HMM (Baum-Welch),conventional,belief >= 0.5,0.4255,0.5269,0.6026
-HMM (Baum-Welch),matched,hmm_bw_logodds >= 25.95,0.0957,0.0108,0.2692
-"HMM (prior, level)",matched,hmm_prior_level >= 1.09,0.0957,0.043,0.2564
-"HMM (Baum-Welch, level)",matched,hmm_bw_level >= 0.8737,0.0851,0.0645,0.3077
+method,operating_point,rule,far_tune_neg,far_test_neg,far_test_neg_low,far_test_neg_high,sens_test_pos,sens_test_pos_low,sens_test_pos_high
+PRR,conventional,"PRR >= 2, chi-square >= 4, cases >= 3",0.2766,0.3763,0.2763,0.4654,0.5385,0.4353,0.6338
+PRR,matched,prr_lower >= 2.573,0.0957,0.0645,0.0215,0.1137,0.359,0.2571,0.4658
+ROR,conventional,lower 95% bound > 1,0.3723,0.4946,0.3793,0.6038,0.6923,0.5999,0.7875
+ROR,matched,ror_lower >= 2.629,0.0957,0.0645,0.0215,0.1137,0.359,0.2571,0.4658
+BCPNN,conventional,IC025 > 0,0.3404,0.4301,0.3158,0.5349,0.6795,0.575,0.7838
+BCPNN,matched,ic025 >= 1.248,0.0957,0.0538,0.0114,0.0978,0.3205,0.2208,0.4267
+GPS,conventional,EB05 >= 2,0.1596,0.1398,0.0568,0.2283,0.4487,0.3333,0.5526
+GPS,matched,eb05 >= 2.453,0.0957,0.0645,0.0192,0.125,0.3462,0.2429,0.4524
+HMM (prior),conventional,belief >= 0.5,0.4468,0.5806,0.4667,0.6869,0.6923,0.5926,0.7826
+HMM (prior),matched,hmm_prior_logodds >= 22.78,0.0957,0.0108,0.0,0.0345,0.2949,0.1807,0.4097
+HMM (Baum-Welch),conventional,belief >= 0.5,0.4255,0.5269,0.4149,0.6383,0.6026,0.5,0.6974
+HMM (Baum-Welch),matched,hmm_bw_logodds >= 25.95,0.0957,0.0108,0.0,0.0345,0.2692,0.1644,0.3798
+"HMM (prior, level)",matched,hmm_prior_level >= 1.09,0.0957,0.043,0.0102,0.0825,0.2564,0.1724,0.3457
+"HMM (Baum-Welch, level)",matched,hmm_bw_level >= 0.8737,0.0851,0.0645,0.022,0.1146,0.3077,0.2162,0.4028
